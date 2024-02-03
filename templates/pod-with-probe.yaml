@@ -13,16 +13,16 @@ spec:
       image: image-name
       ports:
         - containerPort: 80
-      livenessProbe:
+      livenessProbe: #ini pengecekan klo terjadi kesalahan service akan di restart
         httpGet:
           path: /health
           port: 80
-        initialDelaySeconds: 0
-        periodSeconds: 10
-        timeoutSeconds: 1
-        successThreshold: 1
-        failureThreshold: 3
-      readinessProbe:
+        initialDelaySeconds: 0 # pengecekan pertama mau berapa detik setelah containernya hidup (ini defaultnya 0 jadi klo ga di set )
+        periodSeconds: 10 # seberapa sering? (ini berarti 10 detik sekali)
+        timeoutSeconds: 1 # kalo response lebih dari 1 detik maka dianggap ga sehat
+        successThreshold: 1 # setalah ga sehat, mau dianggap sehat setelah berapa kali pengecekan?
+        failureThreshold: 3 # berapakali pengecekan sampe dianggap ga sehat
+      readinessProbe: # ini pengecekan klo ada masalah dengan aplikasi maka traffic ke aplikasi akan dihentikan
         httpGet:
           path: /
           port: 80
